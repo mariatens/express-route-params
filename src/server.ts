@@ -62,7 +62,7 @@ app.get<{numOne: string, numTwo: string, numThree?:string}>("/add/:numOne/:numTw
   const { numOne, numTwo, numThree } = req.params;
   const addition = parseInt(numOne) + parseInt(numTwo) + (numThree ? parseInt(numThree) : 0);
   res.json({
-    original: `${numOne} + ${numTwo} + ${numThree}`,
+    original: numThree ? `${numOne} + ${numTwo} + ${numThree}`: `${numOne} + ${numTwo}`,
     result: addition,
   });
 });
