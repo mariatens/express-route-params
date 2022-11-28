@@ -67,6 +67,12 @@ app.get<{numOne: string, numTwo: string, numThree?:string}>("/add/:numOne/:numTw
   });
 });
 
+app.get<{animal: string}>("/eat/:animal", (req, res) => {
+  const {animal} = req.params
+  res.json(
+    { message: "aeiou".includes(animal[0]) ? `Yum yum - you ate an ${animal}!` :  `Yum yum - you ate a ${animal}!`})
+})
+
 
 /**
  * `app.get` can take a type argument.
