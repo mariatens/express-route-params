@@ -26,7 +26,7 @@ app.get("/eat/carrot", (req, res) => {
   });
 });
 
-app.get("/echo/:exampleRouteParameter", (req, res) => {
+app.get<{exampleRouteParameter: any}>("/echo/:exampleRouteParameter", (req, res) => {
   const echoContent = req.params.exampleRouteParameter;
   res.json({
     echo: echoContent,
@@ -34,7 +34,15 @@ app.get("/echo/:exampleRouteParameter", (req, res) => {
   });
 });
 
-app.get("/multiply/:numOne/:numTwo", (req, res) => {
+app.get<{exampleRouteParameter: string}>("/shout/:exampleRouteParameter", (req, res) => {
+  const shoutContent = req.params.exampleRouteParameter.toUpperCase();
+  res.json({
+     shout: shoutContent, 
+    result: `I am shouting back to you: ${shoutContent}`
+  });
+});
+
+app.get<{numOne: string, numTwo: string}>("/multiply/:numOne/:numTwo", (req, res) => {
   /**
    * Note that `numOne` and `numTwo` are both typed as string.
    * (Hover over with your mouse to see!)
@@ -49,6 +57,16 @@ app.get("/multiply/:numOne/:numTwo", (req, res) => {
     result: multiplication,
   });
 });
+
+app.get<{numOne: string, numTwo: string, numThree?:string}>("/add/:numOne/:numTwo/:numThree?", (req, res) => {
+  const { numOne, numTwo, numThree } = req.params;
+  const addition = parseInt(numOne) + parseInt(numTwo) + (numThree ? parseInt(numThree) : 0);
+  res.json({
+    original: `${numOne} + ${numTwo} + ${numThree}`,
+    result: addition,
+  });
+});
+
 
 /**
  * `app.get` can take a type argument.
